@@ -31,8 +31,10 @@
   - name: Extract archive
     unarchive:
       src: /tmp/apache-tomcat-8.5.40.tar.gz
-      dest: /opt/tomcat
-  - name: change the directory to /opt/tomcat
+      dest: /opt/tomcat                             
+      extra_opts: [--strip-components=1]
+      remote_src: yes
+  - name: change th directory to /opt/tomcat
     shell: cd /opt/tomcat
   - name: Change ownership of Tomcat installation
     file: 
@@ -69,9 +71,13 @@
       dest: /tmp/ 
   - name: move the war file from /tmp to webaps path
     shell: mv /tmp/gameoflife.war /opt/tomcat/webapps/
+  - name: changing permisssions for webapps 
+    shell: chmod 755 /opt/tomcat/webapps/gameoflife.war
+    notify: 
+    - tomcat-8-restart
   handlers:
     - name: tomcat-8-restart
       service: 
         name: tomcat 
         state: restarted
-        
+ 
