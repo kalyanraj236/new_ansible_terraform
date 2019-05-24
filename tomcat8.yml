@@ -66,9 +66,9 @@
       src: context.xml.j2
       dest: /opt/tomcat/webapps/host-manager/META-INF/context.xml
   - name: Download gameoflife.war file
-    get_url:
-      url: https://github.com/omkaramkalyan/jenkinsfile.git
-      dest: /tmp/ 
+    - git:
+      repo: 'https://github.com/omkaramkalyan/jenkinsfile.git'
+      dest: /tmp/
   - name: move the war file from /tmp to webaps path
     shell: mv /tmp/gameoflife.war /opt/tomcat/webapps/
   - name: changing permisssions for webapps 
